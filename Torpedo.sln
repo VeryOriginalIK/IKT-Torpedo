@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C# torpedo", "C# torpedo.csproj", "{3659AE59-E003-4764-B63E-3B872DB4BD05}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Torpedo", "Torpedo.csproj", "{33AF4AE0-7352-4340-9099-3262317088D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3659AE59-E003-4764-B63E-3B872DB4BD05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3659AE59-E003-4764-B63E-3B872DB4BD05}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3659AE59-E003-4764-B63E-3B872DB4BD05}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3659AE59-E003-4764-B63E-3B872DB4BD05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33AF4AE0-7352-4340-9099-3262317088D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33AF4AE0-7352-4340-9099-3262317088D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33AF4AE0-7352-4340-9099-3262317088D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33AF4AE0-7352-4340-9099-3262317088D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9DA57A04-63BB-457B-B387-463661AF14F9}
+		SolutionGuid = {FF241D11-90BC-4246-8114-3FFC43F6FF6E}
 	EndGlobalSection
 EndGlobal
