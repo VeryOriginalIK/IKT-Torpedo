@@ -10,6 +10,7 @@ bool HajoLerak(Mezo mezo)
     {
     if (mezo.hajo) { 
         Console.WriteLine("Erre a mezőre már raktál hajót!");
+        Thread.Sleep(1000);
         return false;
         }
     else { 
@@ -20,10 +21,15 @@ bool HajoLerak(Mezo mezo)
 
 void Tippeles(Mezo mezo)
 {
-    if (mezo.kilove)
+    if (mezo.kilove) { 
         Console.WriteLine("Erre a mezőre már tippeltél!");
-    else
+        Thread.Sleep(1000);
+        return false;
+    }
+    else { 
         mezo.kilove = true;
+        return true;
+    }
 }
 
 static void Generalas(Mezo[] mezok)
@@ -51,39 +57,45 @@ void Lerakas() {
     int hajohossz = hajok[hajo]; 
     List<int> oszlopok = new List<int> { };
     List<int> sorok = new List<int> { };
-    Console.WriteLine($"Rakd le a {hajo}t!");
+    Console.WriteLine($"\nRakd le a {hajo}t! ({hajohossz})");
         do
         {
 ;       var hely = Beker();
         int oszlop = hely[0];
         int sor = hely[1];
         Mezo mezo = mezok.First(x => x.oszlop == oszlop && x.sor == sor);
-        if(HajoLerak(mezo)) { 
-            hajohossz--;
-            oszlopok.Add(mezo.oszlop);
-            sorok.Add(mezo.sor);
-            Ellenorzes(oszlop, sor, oszlopok, sorok);
+        if(HajoLerak(mezo) && Ellenorzes(oszlop, sor, oszlopok, sorok)) { 
+           oszlopok.Add(mezo.oszlop);
+           sorok.Add(mezo.sor);
+           hajohossz--;
          }
 
         Kiiaratas(true);
         }
         while (hajohossz > 0);
+        Console.WriteLine("\nKész!");
+        Thread.Sleep(1000);
     }
 
     bool Ellenorzes(int oszlop, int sor, List<int> oszlopok,List<int> sorok)
     {
-        if (oszlopok.Max() - oszlopok.Min() == 0 && oszlopok[0] == oszlop)
+        bool helyes = false;
+        if (oszlopok.Count() == 0) // ha még nem adott meg semmit
             return true;
-        if (sorok.Max() - sorok.Min() == 0 && sorok[0] == sor)
-            return true;
-        else{
-            Console.WriteLine("A hajódnak egyesnek kell lennie!");
-            oszlopok.RemoveAt(oszlopok.Count() -1 );
-            sorok.RemoveAt(sorok.Count() - 1);
-            mezok.First(x => x.oszlop == oszlop && x.sor == sor).hajo = false;
-            Thread.Sleep(1500);
-            return false;
+        if (oszlopok.Max() - oszlopok.Min() == 0 && oszlopok[0] == oszlop) //Azonos-e valamelyik sorral
+            helyes = true;
+        if (sorok.Max() - sorok.Min() == 0 && sorok[0] == sor)             //,vagy oszloppal
+            helyes = true;
+        if ((helyes == true) && (sorok.Max() == sor - 1 || sorok.Min() == sor + 1 || oszlopok.Max() == oszlop - 1 || oszlopok.Min() == oszlop + 1))  //Ha már létező mellé rakta
+            return helyes;
+        else {
+            Console.WriteLine("A darabokat sorban rakd le!");
         }
+        if (helyes == false)
+            Console.WriteLine("A hajódnak egyesnek kell lennie!");
+        Thread.Sleep(1500);
+        mezok.First(x => x.oszlop == oszlop && x.sor == sor).hajo = false;
+        return false;
     }
 }
 
@@ -91,44 +103,47 @@ int[] Beker()
 {
     int hibas = 0;
     int[] koordinatak = new int[2];
-    do
+    string[] bekert = new string[] { };
+    while (true)
     {
-        string[] bekert = new string[] { };
-        do
-        {
-            if (hibas > 0)
-                Console.WriteLine("Két külön számot adj meg 1 és 10 között. \nPélda: 5 5");
-            Console.WriteLine("Add meg a koordinátákat (oszlop,sor): ");
-            bekert = Console.ReadLine().Split(" ");
-            hibas++;
-        }
-        while (bekert.Length != 2 || (!int.TryParse(bekert[0], out int o) || !int.TryParse(bekert[1], out int s)));
-
+        if (hibas > 0)
+            Console.WriteLine("Két külön számot adj meg 1 és 10 között. \nPélda: 5 5");
+        Console.WriteLine("\n\nAdd meg a koordinátákat (oszlop,sor): ");
+        bekert = Console.ReadLine().Trim().Split(" ");
+        hibas++;
+        if (bekert.Length != 2 || (!int.TryParse(bekert[0], out int o) || !int.TryParse(bekert[1], out int s)))
+            continue;
         koordinatak[0] = int.Parse(bekert[0]);
         koordinatak[1] = int.Parse(bekert[1]);
+        if (koordinatak[0] <= 10 && koordinatak[0] >= 1 && koordinatak[1] <= 10 && koordinatak[1] >= 1)
+            break;
     }
-    while (koordinatak[0] > 10 || koordinatak[0] < 1 || koordinatak[1] > 10 || koordinatak[1] < 1);
     return koordinatak;
 }
 
 
 void Kiiaratas(bool lerakas)
 {
+
     Console.Clear();
-    Console.Write("  ");
-    for (int oszlop = 1; oszlop < 11; oszlop++)
+    Console.Write("\t");
+    for (int oszlop = 1; oszlop < 11; oszlop++) //Számok
     {
         Console.Write( $" {oszlop} ");
     }
-    Console.Write("\n1 ");
+    Console.Write("\n1\t");
     for (int i = 0; i < mezok.Length; i++)
     {
-        try
+        try //Oszlop számok
         {
-            if (mezok[i+1].oszlop != mezok[i].oszlop)
-                Console.Write($"\n{(i / 10)+2} ");
+            if (mezok[i-1].sor % 10 == 0)
+                Console.Write($"\n{(i / 10)+1}\t");
         }
-        catch { Console.WriteLine(); }
+        catch { 
+            if (mezok[i].sor > 10) 
+                Console.WriteLine("\t");
+        }
+
         if (!mezok[i].kilove && !lerakas)
             Console.Write("[]");
         else
