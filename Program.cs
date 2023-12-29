@@ -5,6 +5,7 @@ using Torpedo;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 Mezo[] mezok = new Mezo[100];
+Mezo[] ellenfel = new Mezo[100];
 
 bool HajoLerak(Mezo mezo)
     {
@@ -19,20 +20,20 @@ bool HajoLerak(Mezo mezo)
     }
 }
 
-void Tippeles(Mezo mezo)
+bool Tippeles(Mezo mezo)
 {
     if (mezo.kilove) { 
         Console.WriteLine("Erre a mezőre már tippeltél!");
         Thread.Sleep(1000);
         return false;
-    }
+        }
     else { 
         mezo.kilove = true;
         return true;
     }
 }
 
-static void Generalas(Mezo[] mezok)
+static void Generalas(Mezo[] mezok, Mezo[] ellenfel)
 {
     int sorszam = 0;
     int sor = 1;
@@ -42,6 +43,7 @@ static void Generalas(Mezo[] mezok)
         while (sor != 11)
         {
             mezok[sorszam] = new Mezo(i, sor, false, false);
+            ellenfel[sorszam] = new Mezo(i, sor, false, false);
             sor++;
             sorszam++;
         }
@@ -144,18 +146,43 @@ void Kiiaratas(bool lerakas)
                 Console.WriteLine("\t");
         }
 
-        if (!mezok[i].kilove && !lerakas)
-            Console.Write("[]");
+        if(lerakas) {
+            if (mezok[i].hajo)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(" O ");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write(" X ");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+        }
         else
         {
-            if (mezok[i].hajo)
-                Console.Write(" O ");
+            if (ellenfel[i].kilove)
+                Console.Write("[?]");
+
             else
-                Console.Write(" X ");
+            {
+                if (ellenfel[i].hajo)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(" O ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write(" X ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
         }
-        
     }
 }
 
-Generalas(mezok);
+Generalas(mezok, ellenfel);
 Lerakas();
