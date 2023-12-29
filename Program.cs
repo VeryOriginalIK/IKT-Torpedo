@@ -191,21 +191,25 @@ void Jatek()
 {
     while (true)
     {
-
+        Tamadas();
     }
 
     void Tamadas()
     {
-
+        string tipp = Beker().ToString();
+        Network.Kuldes(tipp);
+        Console.WriteLine(Network.Fogadas());
     }
 
     void Vedekezes()
     {
 
+
     }
-
-
+    
+}
 
 Network.Csatlakozas();
 Generalas(mezok, ellenfel);
 Lerakas();
+Jatek();
