@@ -6,6 +6,9 @@ using Torpedo;
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 Mezo[] mezok = new Mezo[100];
 Mezo[] ellenfel = new Mezo[100];
+Console.WriteLine("Szia! Hogy hívnak?");
+string name = Console.ReadLine();
+Console.WriteLine("Szia, " + name + "!");
 
 bool HajoLerak(Mezo mezo)
     {
@@ -184,5 +187,25 @@ void Kiiaratas(bool lerakas)
     }
 }
 
+void Jatek()
+{
+    while (true)
+    {
+
+    }
+
+    void Tamadas()
+    {
+
+    }
+
+    void Vedekezes()
+    {
+
+    }
+
+
+
+Network.Csatlakozas();
 Generalas(mezok, ellenfel);
 Lerakas();
